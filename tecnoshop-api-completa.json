@@ -1,0 +1,440 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+		"name": "TecnoShop API - Colección Completa",
+		"description": "Colección exhaustiva para la API de TecnoShop, incluyendo todos los endpoints CRUD para todas las entidades.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Autenticación",
+			"item": [
+				{
+					"name": "Registrar Usuario",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"newuser\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/register",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "auth", "register"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login y Obtener Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.collectionVariables.set(\"jwt_token\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/login",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "auth", "login"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "GET All Clientes",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"url": {
+							"raw": "http://localhost:8080/api/clientes?page=0&size=10",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "clientes"],
+							"query": [{"key": "page", "value": "0"}, {"key": "size", "value": "10"}]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Cliente by ID",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"url": {
+							"raw": "http://localhost:8080/api/clientes/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "clientes", "1"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Create Cliente",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Ana\",\n    \"apellido\": \"Gomez\",\n    \"email\": \"ana.gomez@example.com\",\n    \"telefono\": \"111222333\",\n    \"direccion\": \"Calle Sol 45\",\n    \"pais\": \"España\",\n    \"codigoPostal\": \"28013\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/clientes",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "clientes"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Update Cliente",
+					"request": {
+						"method": "PUT",
+						"header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Ana Maria\",\n    \"apellido\": \"Gomez\",\n    \"email\": \"ana.gomez.updated@example.com\",\n    \"telefono\": \"111222334\",\n    \"direccion\": \"Plaza Mayor 1\",\n    \"pais\": \"España\",\n    \"codigoPostal\": \"28012\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/clientes/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "clientes", "1"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Cliente",
+					"request": {
+						"method": "DELETE",
+						"header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"url": {
+							"raw": "http://localhost:8080/api/clientes/2",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "clientes", "2"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+        {
+			"name": "Categorías",
+			"item": [
+				{
+					"name": "GET All Categorías",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"url": "http://localhost:8080/api/categorias"
+					},
+					"response": []
+				},
+				{
+					"name": "GET Categoría by ID",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"url": "http://localhost:8080/api/categorias/1"
+					},
+					"response": []
+				},
+				{
+					"name": "POST Create Categoría",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Portátiles\"\n}"
+						},
+						"url": "http://localhost:8080/api/categorias"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Update Categoría",
+					"request": {
+						"method": "PUT",
+						"header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Laptops y Ultrabooks\"\n}"
+						},
+						"url": "http://localhost:8080/api/categorias/1"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Categoría",
+					"request": {
+						"method": "DELETE",
+						"header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"url": "http://localhost:8080/api/categorias/2"
+					},
+					"response": []
+				}
+			]
+		},
+        {
+			"name": "Proveedores",
+			"item": [
+				{
+					"name": "GET All Proveedores",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"url": "http://localhost:8080/api/proveedores"
+					},
+					"response": []
+				},
+				{
+					"name": "GET Proveedor by ID",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"url": "http://localhost:8080/api/proveedores/1"
+					},
+					"response": []
+				},
+				{
+					"name": "POST Create Proveedor",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Componentes PC S.A.\",\n    \"numeroContacto\": \"+34 912 345 678\"\n}"
+						},
+						"url": "http://localhost:8080/api/proveedores"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Update Proveedor",
+					"request": {
+						"method": "PUT",
+						"header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Componentes PC Global\",\n    \"numeroContacto\": \"+34 912 345 679\"\n}"
+						},
+						"url": "http://localhost:8080/api/proveedores/1"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Proveedor",
+					"request": {
+						"method": "DELETE",
+						"header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"url": "http://localhost:8080/api/proveedores/2"
+					},
+					"response": []
+				}
+			]
+		},
+        {
+			"name": "Productos",
+			"item": [
+				{
+					"name": "GET All Productos",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"url": {
+							"raw": "http://localhost:8080/api/productos?page=0&size=10&nombre=teclado&categoriaId=1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "productos"],
+							"query": [
+								{"key": "page", "value": "0"},
+								{"key": "size", "value": "10"},
+								{"key": "nombre", "value": "teclado"},
+								{"key": "categoriaId", "value": "1"}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Producto by ID",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"url": "http://localhost:8080/api/productos/1"
+					},
+					"response": []
+				},
+				{
+					"name": "POST Create Producto",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Teclado Mecánico RGB\",\n    \"descripcion\": \"Teclado con switches rojos y retroiluminación RGB\",\n    \"precio\": 89.99,\n    \"stock\": 150,\n    \"categoriaId\": 1\n}"
+						},
+						"url": "http://localhost:8080/api/productos"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Update Producto",
+					"request": {
+						"method": "PUT",
+						"header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Teclado Mecánico RGB Pro\",\n    \"descripcion\": \"Teclado con switches rojos, retroiluminación RGB y reposamuñecas\",\n    \"precio\": 99.99,\n    \"stock\": 120,\n    \"categoriaId\": 1\n}"
+						},
+						"url": "http://localhost:8080/api/productos/1"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Producto",
+					"request": {
+						"method": "DELETE",
+						"header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"url": "http://localhost:8080/api/productos/2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedidos",
+			"item": [
+				{
+					"name": "GET All Pedidos",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"url": "http://localhost:8080/api/pedidos"
+					},
+					"response": []
+				},
+				{
+					"name": "GET Pedido by ID",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"url": "http://localhost:8080/api/pedidos/1"
+					},
+					"response": []
+				},
+				{
+					"name": "POST Create Pedido",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clienteId\": 1,\n    \"estado\": \"PENDIENTE\",\n    \"direccionEnvio\": \"Calle de la Entrega 77\",\n    \"detalles\": [\n        {\n            \"productoId\": 1,\n            \"cantidad\": 2\n        },\n        {\n            \"productoId\": 2,\n            \"cantidad\": 1\n        }\n    ]\n}"
+						},
+						"url": "http://localhost:8080/api/pedidos"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Update Pedido",
+					"request": {
+						"method": "PUT",
+						"header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clienteId\": 1,\n    \"estado\": \"ENVIADO\",\n    \"direccionEnvio\": \"Calle de la Entrega 77, Puerta A\",\n    \"detalles\": [\n        {\n            \"productoId\": 1,\n            \"cantidad\": 2\n        }\n    ]\n}"
+						},
+						"url": "http://localhost:8080/api/pedidos/1"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Pedido",
+					"request": {
+						"method": "DELETE",
+						"header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"url": "http://localhost:8080/api/pedidos/2"
+					},
+					"response": []
+				}
+			]
+		},
+        {
+			"name": "Facturas",
+			"item": [
+				{
+					"name": "GET All Facturas",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"url": "http://localhost:8080/api/facturas"
+					},
+					"response": []
+				},
+				{
+					"name": "GET Factura by ID",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"url": "http://localhost:8080/api/facturas/1"
+					},
+					"response": []
+				},
+				{
+					"name": "POST Create Factura",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clienteId\": 1,\n    \"detalles\": [\n        {\n            \"productoId\": 1,\n            \"cantidad\": 1\n        }\n    ]\n}"
+						},
+						"url": "http://localhost:8080/api/facturas"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "jwt_token",
+			"value": ""
+		}
+	]
+}
