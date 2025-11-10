@@ -2,6 +2,7 @@ package com.tecnoshop.api.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public class ClienteDTO {
@@ -20,6 +21,7 @@ public class ClienteDTO {
     private String email;
 
     @Size(max = 20, message = "El teléfono no puede tener más de 20 caracteres.")
+    @Pattern(regexp = "^[0-9+\\-]+$", message = "El teléfono solo puede contener números y los símbolos + -")
     private String telefono;
 
     @NotBlank
